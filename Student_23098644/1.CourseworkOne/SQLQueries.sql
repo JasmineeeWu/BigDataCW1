@@ -3,7 +3,9 @@ Author: Student_23098644
 Date: 2024-03-25
 Content: SQL Queries for CourseWork One
 */
+
 set search_path = cash_equity, "$user", public;
+
 -- SQL Query 1: Compare the US and France equity performance from different GICS sectors.
 with sector_return as (
 select gics_sector, country,
@@ -27,7 +29,6 @@ from sector_return
 group by gics_sector
 having count(distinct country) > 1
 order by gics_sector;
-
 
 
 -- SQL Query 2: Compare the performance for each fund from 2023-10-28 to 2023-11-24 (assume portfolio positions did not change).
