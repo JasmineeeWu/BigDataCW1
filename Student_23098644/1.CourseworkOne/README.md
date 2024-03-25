@@ -15,7 +15,7 @@
 
 ## Introduction
 
-Query tools can be used to analyse databases and provide users with powerful capabilities to derive insights from data. This report will demonstrate practical applications for a given financial database using SQL and NoSQL techniques. They have different ways, but have equally powerful and effective capabilities for solving data problems. By exploring both query tools with real-world data, this report addresses a total of four real-world financial problems, including: 
+Query tools can be used to analyse databases and provide users with powerful capabilities to derive insights from data. This report will demonstrate practical applications for given financial databases using SQL and NoSQL techniques. They have different ways, but have equally powerful and effective capabilities for solving data problems. By exploring both query tools with real-world data, this report addresses a total of four real-world financial problems, including: 
 1.	Compare equity performance across countries and sectors in SQL, 
 2.	Compare performance of funds and fund traders in SQL, 
 3.	Compare the performance of large cap securities across sectors in NoSQL, 
@@ -25,7 +25,7 @@ Query tools can be used to analyse databases and provide users with powerful cap
 ## Description of SQL and NoSQL Databases
 ## SQL Database
 
-SQL databases organise data into tables with columns. The SQL database contains six tables in the schema name called ‘cash_equity’. 
+SQL databases organise data into tables with columns. The given SQL database contains six tables in the schema name called ‘cash_equity’. 
 
 Table ‘equity_prices’ presents equity basic financial data from the date 2021-01-04 to 2023-11-23 including the equity's daily prices, volume, currency, and IDs. 
 Table ‘equity_static’ shows the equity basic fundamental information including security names, GICS sectors, GICS industries, countries, and regions. 
@@ -37,7 +37,7 @@ The SQL database contains both special and common information, which in general 
 
 ## NoSQL Database
 
-NoSQL databases can record data in various formats like in a JSON file. The NoSQL database records 505 securities and their basic information respectively. Each security’s information contains symbols, static data, market data, and financial ratios. StaticData includes security name, SEC filings, GICS sector, and GICS sub-industry. MarketData includes price, market cap, and beta. FinancialRatios includes dividend yield, PE ratio, and payout ratio. 
+NoSQL databases can record data in various formats like in a JSON file, which are more flexible. The given NoSQL database records 505 securities and their basic information respectively. Each security’s information contains symbols, static data, market data, and financial ratios. StaticData includes security name, SEC filings, GICS sector, and GICS sub-industry. MarketData includes price, market cap, and beta. FinancialRatios includes dividend yield, PE ratio, and payout ratio. 
 
 The NoSQL database provides the security information in sections, which means it is more intuitive to see the basic information about each security, as the information structure is essentially the same in each section. Note that the NoSQL database is going to apply in MongoDB, in a collection called ‘CoureworkOne’. 
 
@@ -95,9 +95,9 @@ It can be discovered from the output table that for most sectors, France outperf
 ## SQL2
 
 #### Background: 
-Each fund trader manages a fund. It is important to understand how the fund traders perform by directly discovering their fund performance since it will allow investors to assess the traders’ effectiveness as well as guide their future investment decisions. 
+Each fund trader manages a fund. It is important to understand how the fund traders perform by directly discovering their fund performance, since it will allow investors to assess the traders’ effectiveness as well as guide their future investment decisions. 
 #### Aims: 
-The primary aim of the query is to assess and compare the performance of individual funds during the period from 2023-10-28 to 2023-11-24. By analyzing changes in the net amount of equity positions held by each fund over this timeframe, the query aims to identify the profitability across different funds. Ultimately, this analysis will enable investors to gain insights into the relative performance of the given funds and at the same time, evaluate the fund trader's performance.
+The primary aim of the query is to assess and compare the performance of individual funds during the period from 2023-10-28 to 2023-11-24. By analyzing changes in the net amount of equity positions held by each fund over this timeframe, the query will enable investors to gain insights into the relative performance of the given funds and at the same time, evaluate the fund trader's performance.
 #### Approach: 
 When discovering the raw database, I found that the portfolio position changes occurred on 2023-10-27, so I would like to research the traders’ performance and their corresponding fund performance assuming that the portfolio positions did not change from 2023-10-28 to the end of the given period 2023-11-24. 
 
