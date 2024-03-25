@@ -3,6 +3,10 @@ Author: Student_23098644
 Date: 2024-03-25
 Content: NoSQL - MongoDB Queries for CourseWork One
 */
+
+mongosh
+use cw
+
 /* NoSQL Query 1: Calculate the average price for each GICSSector when the security market cap is larger than 100000, find the best-performed sector.*/
 
 db.CourseworkOne.aggregate([
