@@ -12,7 +12,8 @@ db.CourseworkOne.aggregate([
     {$limit:1}])
 
 
-/* NoSQL Query 2: A Personalised Security Screening Process: find the best security in each GICSSector that satisfy: 
+/* NoSQL Query 2: A Personalised Security Screening Process. 
+Find the best security in each GICSSector that satisfy: 
 1. Market Cap above sector average;
 2. PE Ratio above sector average;
 3. Dividend Yield above sector average;
