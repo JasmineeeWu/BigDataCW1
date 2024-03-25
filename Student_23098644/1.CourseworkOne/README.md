@@ -15,31 +15,31 @@
 
 ## Introduction
 
-Query tools can be used to analyse databases and provide users with powerful capabilities to derive insights from data. This report will demonstrate practical applications for given financial databases using SQL and NoSQL techniques. They have different ways, but have equally powerful and effective capabilities for solving data problems. By exploring both query tools with real-world data, this report addresses a total of four real-world financial problems, including: 
-1.	Compare equity performance across countries and sectors in SQL, 
-2.	Compare performance of funds and fund traders in SQL, 
-3.	Compare the performance of large cap securities across sectors in NoSQL, 
-4.	A personalised method for screening securities in NoSQL.
+Query tools can be used to analyse databases and provide users with powerful capabilities to derive insights from data. This report will demonstrate practical applications for given financial databases using SQL and NoSQL techniques. They have different ways, but have equally powerful and effective capabilities for solving data problems. By exploring both query tools with real-world data, this report addresses a total of four real-world financial considerations, including: 
+1.	Compare equity performance across countries and sectors using SQL, 
+2.	Compare performance of funds and fund traders using SQL, 
+3.	Compare the performance of large cap securities across sectors using NoSQL, 
+4.	A personalised method for screening securities using NoSQL.
 
 
 ## Description of SQL and NoSQL Databases
 ## SQL Database
 
-SQL databases organise data into tables with columns. The given SQL database contains six tables in the schema name called ‘cash_equity’. 
+SQL databases organise data into tables with columns. The given SQL database contains six tables in the schema called ‘cash_equity’. 
 
-Table ‘equity_prices’ presents equity basic financial data from the date 2021-01-04 to 2023-11-23 including the equity's daily prices, volume, currency, and IDs. 
+Table ‘equity_prices’ presents equity basic financial data from the date 2021-01-04 to 2023-11-24 including the equity's daily prices, volumes, currencies, and IDs. 
 Table ‘equity_static’ shows the equity basic fundamental information including security names, GICS sectors, GICS industries, countries, and regions. 
 Table ‘exchange_rates’ summaries the daily exchange rate across different currencies. 
-Table ‘portfolio_postiions’ provides statistics for the portfolio position changes on 2023-10-27, with trader information, net quantity, and net amount for each position change. 
+Table ‘portfolio_positions’ provides statistics for the portfolio position changes on 2023-10-27, with trader information, net quantity, and net amount for each position change. 
 Table ‘trader_limits’ lists the traders, and their trade limit types, categories, and amounts with limit date periods. 
 The last table ‘trader_static’ contains 10 columns that present different trader names and their different managed funds names, types, and focuses, etc.
-The SQL database contains both special and common information, which in general gives the investor a lot of information to analyse.
+These tables in the given SQL database contain a number of relevant columns, as well as some unique columns, which in general gives the investor lots of data to analyse.
 
 ## NoSQL Database
 
-NoSQL databases can record data in various formats like in a JSON file, which are more flexible. The given NoSQL database records 505 securities and their basic information respectively. Each security’s information contains symbols, static data, market data, and financial ratios. StaticData includes security name, SEC filings, GICS sector, and GICS sub-industry. MarketData includes price, market cap, and beta. FinancialRatios includes dividend yield, PE ratio, and payout ratio. 
+NoSQL databases can record data in various formats like in a JSON file, which are more flexible. The given NoSQL database records 505 securities and their basic information respectively. Each security’s data contains symbols, static data, market data, and financial ratios. StaticData includes security name, SEC filings, GICS sector, and GICS sub-industry. MarketData includes price, market cap, and beta. FinancialRatios includes dividend yield, PE ratio, and payout ratio. 
 
-The NoSQL database provides the security information in sections, which means it is more intuitive to see the basic information about each security, as the information structure is essentially the same in each section. Note that the NoSQL database is going to apply in MongoDB, in a collection called ‘CoureworkOne’. 
+The NoSQL database provides the security data in 'sections', which means it is more intuitive to see the basic information about each security, as the structure is essentially the same in each 'section'. Note that the NoSQL database is going to apply in MongoDB, in a collection called ‘CoureworkOne’. 
 
 ## SQL Query Explain
 ## SQL1
@@ -55,7 +55,7 @@ set search_path = cash_equity, "$user", public;
 
 The general approach is summarised as follows:
 
-•	Step 1: Started by formulating a new derived table called sector_return. The sector return table includes the average return (daily_return) calculated by (closing price-open price)/open price for each sector in the two countries respectively. 
+•	Step 1: Started by formulating a new derived table called sector_return. The sector return table includes the average return (daily_return) calculated by (closing price-open price)/open price round 4 decimals for each sector in the two countries respectively. 
 
 ```
 with sector_return as (
@@ -89,17 +89,16 @@ having count(distinct country) > 1
 order by gics_sector;
 ```
 #### Output: 
-The output table has four columns gics_sector, us_return, fr_return, and comparison. The gics_sector column shows ten sectors including Communication Services, Consumer Discretionary, Consumer Staples, Energy, Financials, Health Care, Industries, Materials, Real Estate, and Utilities. Note that there are two sectors (Information Technology and Technology) that are not included in the output as the missing return (‘null’) of one of the countries. 
-It can be discovered from the output table that for most sectors, France outperforms the US, however, for the Energy and Financials sector, the US exceeds France with a higher average return. The comparison provides valuable insight into the relative performance of US and France equities and helps inform investment decisions or portfolio adjustments.
+The output table has four columns: gics_sector, us_return, fr_return, and comparison. The gics_sector column shows ten sectors including Communication Services, Consumer Discretionary, Consumer Staples, Energy, Financials, Health Care, Industries, Materials, Real Estate, and Utilities. Note that there are two sectors (Information Technology and Technology) that are not included in the output as the missing return (‘null’) of one of the countries. 
+It can be discovered from the output table that for most sectors, France outperforms the US, however, for the Energy and Financials sector, the US exceeds France with a higher average return. The comparison provides valuable insight into the relative performance of US and France equities and helps inform investros about investment decisions and portfolio adjustments.
 
 ## SQL2
-
 #### Background: 
 Each fund trader manages a fund. It is important to understand how the fund traders perform by directly discovering their fund performance, since it will allow investors to assess the traders’ effectiveness as well as guide their future investment decisions. 
 #### Aims: 
 The primary aim of the query is to assess and compare the performance of individual funds during the period from 2023-10-28 to 2023-11-24. By analyzing changes in the net amount of equity positions held by each fund over this timeframe, the query will enable investors to gain insights into the relative performance of the given funds and at the same time, evaluate the fund trader's performance.
 #### Approach: 
-When discovering the raw database, I found that the portfolio position changes occurred on 2023-10-27, so I would like to research the traders’ performance and their corresponding fund performance assuming that the portfolio positions did not change from 2023-10-28 to the end of the given period 2023-11-24. 
+When discovering the raw database, I found that the portfolio position changes occurred on 2023-10-27, so I would like to research the traders’ performance and their corresponding fund performance assuming that the portfolio positions did not change from 2023-10-28 to the end of the given period 2023-11-24 (around 1 month). 
 
 
 •	Step 1: Generate a derived table named trader_performance, including a derived table called portfolio_equity that extracts all position-changed equities’ currency, symbol, their traders, and the changing amount with quantity. 
@@ -115,7 +114,7 @@ with portfolio_equity as (
         order by equity_prices.cob_date)
 ```
 
-•	Step 2: Complete the trader_perfomance table construction by calculating these equities’ net amount change in the 1 month and including their trader names and fund names. Note that the new_net_amount is calculated using the daily close prices multiplied by the net quantity (assume no change). 
+•	Step 2: Complete the trader_perfomance table construction by calculating these equities’ net amount change in the 1 month and including their trader names and fund names. The new_net_amount is calculated using the daily close prices multiplied by the net quantity (assume no change). 
 
 ```
 with trader_performance as(
@@ -184,7 +183,7 @@ The output result is [{id: 'Consumer Discretionary', average: 572.0925}], which 
 
 ## NoSQL2
 #### Background: 
-It is essential to generate a personalised security screening process when formulating portfolios. The criteria the investors may consider include market capitalisation, PE ratio, dividend yield, beta, etc. Designing a query template for the security chosen helps not only investors but also analysts construct a portfolio with the consideration of specific fundamental and risk criteria.
+It is essential to generate a personalised security screening process when formulating portfolios. The criteria that investors may consider includes market capitalisation, PE ratio, dividend yield, beta, etc. Designing a query template for the security chosen helps not only investors but also analysts construct a portfolio with the consideration of specific fundamental and risk criteria.
 #### Aims: 
 The query aims to identify the best security in each GICS sector that meets the following criteria: 
 1.	Market Cap above the sector average.
@@ -237,12 +236,12 @@ db.CourseworkOne.aggregate([
 {$project:{_id:1, "chosensecurity.symbol":1, "chosensecurity.Beta":{$min:"$chosensecurity.Beta"}}}])
 ```
 #### Output: 
-The output obtained from the query illustrates that for the given 11 GICS sectors, there are two sectors (Consumer Discretionary, Real Estate, and Communication Services) that cannot screen a best security meeting the criteria. For other sectors, there are 8 securities being chosen, with different betas as well. Typically, Industrials, Financials, and Information Technology sectors have relatively higher risks than the market while the beta of other sector securities are lower than one. Therefore, if the investor includes those securities in the portfolio, the portfolio will show significant diversification due to different sectors and different risks.
+The output obtained from the query illustrates that for the given 11 GICS sectors, there are three sectors (Consumer Discretionary, Real Estate, and Communication Services) that cannot screen a best security meeting the above criteria. For other sectors, there are 8 securities being chosen, with different betas as well. Typically, Industrials, Financials, and Information Technology sectors have relatively higher risks than the market while the beta of other sector securities are lower than one. Therefore, if the investor includes those securities in the portfolio, the portfolio will show significant diversification due to different sectors and different risks.
 
 
 ## Conclusion
 
-In conclusion, the query-design process solved four real-life financial and investment information that may be encountered and explored. 
+In conclusion, the query-design process solved four real-life financial and investment considerations that may be encountered and explored. 
 
 From the SQL queries, it can be summarised that for the Energy and Financials sector, the US equities exceed France's equities and for other GICS sectors, France's equities outperform the US equities. Investors can consider diversifying their portfolios from the country's perspective. Furthermore, considering the performance of the given funds, the fund Global Tech (information technology sector) may have a good trend to invest, and the fund European High Momentum (European stocks) is not possibly recommended to invest. 
 
