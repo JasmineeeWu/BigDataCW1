@@ -6,7 +6,7 @@
   - [Business Case, Challenges, and Data](#business-case-challenges-and-data)
 
   - [Solution to the Challenge](#solution-to-the-challenge)
-   -[Approach](#approach)
+   -[Approaches](#approaches)
    -[Reasons for Limit Types Choosing ](#reasons-for-limit-types-choosing)
    -[Implementation](#implementation)
    -[Results](#results)
