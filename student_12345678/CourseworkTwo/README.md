@@ -3,7 +3,7 @@
 - [My first coursework](#my-first-coursework)
   - [Introduction](#introduction)
 
-  - [Business Case, Challenges, and Data](#business-case-,-challenges-,-and-data)
+  - [Business Case, Challenges, and Data](#business-case-challenges-and-data)
 
   - [Solution to the Challenge](#solution-to-the-challenge)
    -[Approach](#approach)
